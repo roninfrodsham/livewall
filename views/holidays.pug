@@ -1,0 +1,86 @@
+extends layout
+
+block content
+  main(role="main")
+    section.jumbotron.text-center
+      .container
+        h1.jumbotron-heading= title
+        p.lead.text-muted Add public holidays to the LiveWall. The system will display the next upcoming holiday.
+    .content
+      .container
+        .row.row-container
+          if locals.holidayData
+            .col-12
+              h5 Edit Holiday
+            .col-12
+              form(action=`/holidays/${id}` method="POST")
+                .row
+                  .col-12
+                    .form-group
+                      label(for="title") Title
+                      input(class="form-control" type="text" name="title" id="title" placeholder="Enter title" value=holidayData.title)
+                .row
+                  .col-4
+                    .form-group
+                      label(for="day") Day
+                      input(class="form-control" type="text" name="day" id="day" placeholder="Enter day" value=holidayData.day)
+                  .col-4
+                    .form-group
+                      label(for="month") Month
+                      input(class="form-control" type="text" name="month" id="month" placeholder="Enter month" value=holidayData.month)
+                  .col-4
+                    .form-group
+                      label(for="month") Year
+                      input(class="form-control" type="text" name="year" id="month" placeholder="Enter year" value=holidayData.year)
+                input(type="submit" value="Save" class="btn btn-danger")
+          else
+            .col-12
+              h5 Add Holiday
+            .col-12
+              form(action=`/holidays/` method="POST")
+                .row
+                  .col-12
+                    .form-group
+                      label(for="title") Title
+                      input(class="form-control" type="text" name="title" id="title" placeholder="Enter title" value="")
+                .row
+                  .col-4
+                    .form-group
+                      label(for="month") Month
+                      input(class="form-control" type="text" name="month" id="month" placeholder="Enter month" value="")
+                  .col-4
+                    .form-group
+                      label(for="day") Day
+                      input(class="form-control" type="text" name="day" id="day" placeholder="Enter day" value="")
+                  .col-4
+                    .form-group
+                      label(for="month") Year
+                      input(class="form-control" type="text" name="year" id="year" placeholder="Enter year" value="")
+                input(type="submit" value="Save" class="btn btn-danger")
+
+        .row.row-container
+          .col-12
+             h3.text-center Stored Entries            
+          .col-12
+            if locals.holidayList
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Date</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  each holiday in holidayList
+                    tr
+                      td #{holiday.title}
+                      td #{holiday.month}/#{holiday.day}/#{holiday.year}
+                      td
+                        a(class="btn btn-danger" href=`/holidays/${holiday.id}`) Edit
+                      td
+                        a(class="btn btn-danger" href=`/holidays/${holiday.id}`) Delete
+                </tbody>
+              </table>
+              

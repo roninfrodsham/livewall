@@ -1,0 +1,116 @@
+.logo {
+	width: 100px;
+	height: 35px;
+	text-indent: -9999px;
+	background: url(../images/dow_logo.png);
+	-webkit-background-size: 100px 35px;
+	        background-size: 100px 35px;
+}
+
+.jumbotron {
+	background-color: #fff;
+	padding: 2rem 2rem 0rem 2rem;
+}
+
+.jumbotron .container {
+    max-width: 40rem;
+}
+
+.content {
+	padding: 3rem 0;
+	background-color: #f7f7f7;
+}
+
+.row-container {
+	margin-bottom: 2rem;
+	padding: 2rem 1rem;
+	background-color: #fff;
+}
+
+.row-no-margin {
+	margin-bottom: 0;
+}
+
+h1, h3, h4, h5 {
+	color: #dc3545;
+}
+
+h3 {
+	margin-bottom: 2rem;
+}
+
+.row-no-margin h3 {
+	margin-bottom: 0;
+}
+
+.card {
+	float: left;
+  width: 33.333%;
+  padding: .75rem;
+  margin-bottom: 2rem;
+  border: 0;
+}
+
+.card-footer {
+  border: 0;
+}
+
+.btn-pad {
+	margin-right: 0.5rem;
+}
+
+.navbar-nav {
+	width: 100%;
+	text-align: center;
+		> li {
+		  float: none;
+		  display: inline-block;
+		}
+}
+
+.nav-item  {
+	margin-top: 5px;
+	margin-right: 1rem;
+}
+
+.nav-marg-right {
+	margin-right: 4rem;
+}
+
+
+.oneline {
+  &:after {
+    content: "";
+    display: block;
+    width: 100%;
+    height:0;
+    padding-bottom: 100%;
+    background: cadetblue;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+  }
+  &:hover:after {
+    background-color: goldenrod;
+  }
+ div {
+    float:left;
+    width:100%;
+    padding-top:50%;
+    line-height:1em;
+    margin-top:-1.7em;
+    text-align:center;
+    color:white;
+ }
+  p {text-align: center; font-size: 1.2em;}
+}
+
+
+
+td.grey {
+	background: #fff;
+}
+
+.img-thumbnail {
+	background: #000 !important;
+}

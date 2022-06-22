@@ -1,0 +1,207 @@
+extends layout
+
+block content
+  main(role="main")
+    section.jumbotron.text-center
+      .container
+        h1.jumbotron-heading= title
+        p.lead.text-muted Add an artefact and sub content
+
+    .content
+      .container
+        .row.row-container
+          .col-12
+
+            if locals.artefactEdit
+
+              h5 Edit Artefact
+              .col-12
+
+              form(action=`/plinth/${id}/${_id}` method="POST" enctype="multipart/form-data")
+                input(type='hidden' name='origPhoto' value=`${artefactEdit.photo}`)
+                input(type='hidden' name='origsPhoto1' value=`${artefactEdit.sPhoto1}`)
+                input(type='hidden' name='origsPhoto2' value=`${artefactEdit.sPhoto2}`)
+                input(type='hidden' name='origsPhoto3' value=`${artefactEdit.sPhoto3}`)
+                input(type='hidden' name='origsVideo' value=`${artefactEdit.sVideo}`)
+                input(type='hidden' name='origs360' value=`${artefactEdit.s360}`)
+                .form-group
+                  label(for="title") Title
+                  input(value=`${artefactEdit.title}` class="form-control" name="title" placeholder="Enter title")
+                .form-row
+                  .col-3
+                    .ml-2
+                      label(for="photo") Photo
+                      input(class="form-control-file" type="file" name="photo" id="photo" accept="image/png, image/jpeg")
+                  .col
+                    label(for="caption") Caption
+                    input(value=`${artefactEdit.caption}` class="form-control" name="caption" placeholder="Enter caption")
+                  if artefactEdit.photo != ""
+                    .col-3
+                      img(class="img-thumbnail ml-5" src=`/uploads/plinth/${id}/${artefactEdit.photo}` width="200")
+                .form-group
+                  label(for="text") Text
+                  textarea(class="form-control" rows="3" name="text" id="text" placeholder="Enter text")= artefactEdit.text
+                br
+                .form-group
+                  h5 Supporting Media
+                .form-row
+                  .col-3
+                    .ml-2
+                      label(for="sPhoto1") Photo 1
+                      input(class="form-control-file" type="file" name="sPhoto1" id="sPhoto1" accept="image/png, image/jpeg")
+                  .col
+                    label(for="sPhotoCaption1") Caption
+                    input(value=`${artefactEdit.sPhotoCaption1}` class="form-control" name="sPhotoCaption1" placeholder="Enter caption")
+                  if artefactEdit.sPhoto1 != ""
+                    .col-3
+                      img(class="img-thumbnail ml-5" src=`/uploads/plinth/${id}/${artefactEdit.sPhoto1}` width="200")
+                hr
+                .form-row
+                  .col-3
+                    .ml-2
+                      label(for="sPhoto2") Photo 2
+                      input(class="form-control-file" type="file" name="sPhoto2" id="sPhoto2" accept="image/png, image/jpeg")
+                  .col
+                    label(for="sPhotoCaption2") Caption
+                    input(value=`${artefactEdit.sPhotoCaption2}` class="form-control" name="sPhotoCaption2" placeholder="Enter caption")
+                  if artefactEdit.sPhoto2 != ""
+                    .col-3
+                      img(class="img-thumbnail ml-5" src=`/uploads/plinth/${id}/${artefactEdit.sPhoto2}` width="200")
+                hr
+                .form-row
+                  .col-3
+                    .ml-2
+                      label(for="sPhoto3") Photo 3
+                      input(class="form-control-file" type="file" name="sPhoto3" id="sPhoto3" accept="image/png, image/jpeg")
+                  .col
+                    label(for="sPhotoCaption3") Caption
+                    input(value=`${artefactEdit.sPhotoCaption3}` class="form-control" name="sPhotoCaption3" placeholder="Enter caption")
+                  if artefactEdit.sPhoto3 != ""
+                    .col-3
+                      img(class="img-thumbnail ml-5" src=`/uploads/plinth/${id}/${artefactEdit.sPhoto3}` width="200")
+                hr
+                .form-row
+                  .col-3
+                    .ml-2
+                      label(for="sVideo") Video
+                      input(class="form-control-file" type="file" name="sVideo" id="sVideo" accept="video/mp4")
+                  .col
+                    label(for="sVideoCaption") Caption
+                    input(value=`${artefactEdit.sVideoCaption}` class="form-control" name="sVideoCaption" placeholder="Enter caption")
+                  if artefactEdit.sVideo != ""
+                    .col-3
+                      video(width="200" controls class="img-thumbnail ml-5")
+                        source(src=`/uploads/plinth/${id}/${artefactEdit.sVideo}` type="video/mp4")
+                hr
+                .form-row
+                  .col-3
+                    .ml-2
+                      label(for="s360") 360
+                      input(class="form-control-file" type="file" name="s360" id="s360" accept="video/mp4")
+                  .col
+                    label(for="s360Caption") Caption
+                    input(value=`${artefactEdit.s360Caption}` class="form-control" name="s360Caption" placeholder="Enter caption")
+                  if artefactEdit.s360 != ""
+                    .col-3
+                      video(width="200" controls class="img-thumbnail ml-5")
+                        source(src=`/uploads/plinth/${id}/${artefactEdit.s360}` type="video/mp4")
+                hr
+                br
+                input(type="submit" value="Save" class="btn btn-danger btn-pad")
+                a(href=`/plinth/${id}` class="btn btn-danger") Cancel
+                a(href=`/plinth/delete/${id}/${_id}` class="btn btn-danger float-right") Delete
+
+            else if locals.showAddForm
+              
+              h5 Add Artefact
+              .col-12
+
+              form(action=`/plinth/${id}` method="POST" enctype="multipart/form-data")
+                .form-group
+                  label(for="title") Title
+                  input(class="form-control" name="title" placeholder="Enter title")
+                .form-row
+                  .col-3
+                    .ml-2
+                      label(for="photo") Photo
+                      input(class="form-control-file" type="file" name="photo" id="photo" accept="image/png, image/jpeg")
+                  .col
+                    label(for="caption") Caption
+                    input(class="form-control" name="caption" placeholder="Enter caption")
+                .form-group
+                  label(for="text") Text
+                  textarea(class="form-control" rows="4" name="text" placeholder="Enter text")
+                br
+                .form-group
+                  h5 Supporting Media
+                .form-row
+                  .col-3
+                    .ml-2
+                      label(for="sPhoto1") Photo 1
+                      input(class="form-control-file" type="file" name="sPhoto1" id="sPhoto1" accept="image/png, image/jpeg")
+                  .col
+                    label(for="sPhotoCaption1") Caption
+                    input(class="form-control" name="sPhotoCaption1" placeholder="Enter caption")
+                hr
+                .form-row
+                  .col-3
+                    .ml-2
+                      label(for="sPhoto2") Photo 2
+                      input(class="form-control-file" type="file" name="sPhoto2" id="sPhoto2" accept="image/png, image/jpeg")
+                  .col
+                    label(for="sPhotoCaption2") Caption
+                    input(class="form-control" name="sPhotoCaption2" placeholder="Enter caption")
+                hr
+                .form-row
+                  .col-3
+                    .ml-2
+                      label(for="sPhoto3") Photo 3
+                      input(class="form-control-file" type="file" name="sPhoto3" id="sPhoto3" accept="image/png, image/jpeg")
+                  .col
+                    label(for="sPhotoCaption3") Caption
+                    input(class="form-control" name="sPhotoCaption3" placeholder="Enter caption")
+                hr
+                .form-row
+                  .col-3
+                    .ml-2
+                      label(for="sVideo") Video
+                      input(class="form-control-file" type="file" name="sVideo" id="sVideo" accept="video/mp4")
+                  .col
+                    label(for="sVideoCaption") Caption
+                    input(class="form-control" name="sVideoCaption" placeholder="Enter caption")
+                hr
+                .form-row
+                  .col-3
+                    .ml-2
+                      label(for="s360") 360
+                      input(class="form-control-file" type="file" name="s360" id="s360" accept="video/mp4")
+                  .col
+                    label(for="s360Caption") Caption
+                    input(class="form-control" name="s360Caption" placeholder="Enter caption")
+                hr
+                br
+                input(type="submit" value="Save" class="btn btn-danger btn-pad")
+                a(href=`/plinth/${id}` class="btn btn-danger") Cancel
+
+            else
+
+              form(action=`/plinth/add/${id}` method="GET")
+                input(type="submit" value="Add new artefact" class="btn btn-danger")
+
+        
+        .row.row-container.row-no-margin
+          .col-12
+               h3.text-center Stored Artefacts
+
+        .row
+          .col-12
+            .row     
+              if locals.artefactList
+                each artefact in artefactList
+                  .card
+                    img(class="card-img-top" src=`/uploads/plinth/${id}/${artefact.photo}`)
+                    .card-body
+                      p.card-title= artefact.title
+                    .card-footer
+                      a(href=`/plinth/${id}/${artefact.id}` class="btn btn-danger btn-pad") Edit
+                      a(href=`/plinth/delete/${id}/${artefact.id}` class="btn btn-danger") Delete

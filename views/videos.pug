@@ -1,0 +1,53 @@
+extends layout
+
+block content
+  main(role="main")
+    section.jumbotron.text-center
+      .container
+        h1.jumbotron-heading= title
+        p.lead.text-muted Add videos with a title, the LiveWall with play through them in sequence in then Live Mode.
+
+    .content
+      .container
+        .row.row-container
+          if locals.videoEdit
+            .col-12
+              h5 Edit Video  
+            .col-12
+              form(action=`/videos/${videoEdit._id}` method="POST" enctype="multipart/form-data")
+                .form-group
+                  label(for="title") Title
+                  input(class="form-control" type="text" name="title" id="title" placeholder="Enter title" value=videoEdit.title)   
+                .form-group
+                  label(for="photo") Video
+                  input(class="form-control-file" type="file" name="video" id="video" accept="video/mp4")
+                input(type="submit" value="Save" class="btn btn-danger")
+          else
+            .col-12
+              h5 Add Video
+            .col-12
+              form(action=`/videos/` method="POST" enctype="multipart/form-data")
+                .form-group
+                  label(for="title") Title
+                  input(class="form-control" type="text" name="title" id="title" placeholder="Enter title" value="")
+                .form-group
+                  label(for="photo") Video
+                  input(class="form-control-file" type="file" name="video" id="video" accept="video/mp4")
+                input(type="submit" value="Save" class="btn btn-danger")
+
+        .row.row-container.row-no-margin
+          .col-12
+               h3.text-center Stored Videos
+        .row
+          .col-12
+            .row
+              if locals.videosList
+                each video in videosList
+                  .card
+                    video(height="200" controls)
+                      source(src=`/uploads/${video.video}` type="video/mp4")
+                    .card-body
+                      p.card-title= video.title
+                    .card-footer
+                      a(href=`/videos/${video.id}` class="btn btn-danger btn-pad") Edit
+                      a(href=`/videos/delete/${video.id}` class="btn btn-danger") Delete

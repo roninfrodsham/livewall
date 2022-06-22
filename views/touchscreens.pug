@@ -1,0 +1,61 @@
+extends layout
+
+block content
+  main(role="main")
+    section.jumbotron.text-center
+      .container
+        h1.jumbotron-heading= title
+        p.lead.text-muted Update touchscreen application
+    .content
+      .container
+
+        if locals.touchscreenEdit
+
+          .row.row-container
+
+            .col-12
+              h5 Update Title
+              .col-12       
+
+              form(action=`/touchscreens/${id}/${_id}` method="POST")
+                .form-group
+                  input(class="form-control" value=`${touchscreenEdit.title}` name="title" placeholder="Enter title")
+                  br
+                  input(type="submit" value="Save" class="btn btn-danger")
+        else
+
+          .row.row-container
+
+            .col-12
+              h5 Add Touchscreen
+              .col-12       
+
+              form(action=`/touchscreens/${id}` method="POST")
+                .form-row
+                  .col-2
+                    label(for="index") Index
+                    input(class="form-control" name="index" placeholder="Enter index")
+                  .col
+                    label(for="title") Title
+                    input(class="form-control" name="title" placeholder="Enter title")
+                br
+                input(type="submit" value="Save" class="btn btn-danger")
+
+
+        if locals.touchscreenList
+
+        .row.row-container.row-no-margin
+          .col-12
+               h3.text-center Stored Touchscreens
+        .row
+          .col-12
+            .row
+              each touchscreen in touchscreenList
+                .card
+                  .card-body
+                    h5.card-title= `Touchscreen ID - ${touchscreen.id}`
+                    p.card-title= `${touchscreen.title}`
+                  .card-footer
+                    a(href=`/touchscreens/${touchscreen.id}/${touchscreen._id}` class="btn btn-danger btn-pad") Edit Title
+                    a(href=`/touchscreen/${touchscreen.id}` class="btn btn-danger btn-pad") Edit Artefacts
+                    a(href=`/touchscreens/delete/${touchscreen.id}/${touchscreen._id}` class="btn btn-danger") Delete

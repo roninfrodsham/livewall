@@ -1,0 +1,93 @@
+extends layout
+
+block content
+  main(role="main")
+    section.jumbotron.text-center
+      .container
+        h1.jumbotron-heading= title
+        p.lead.text-muted Add events along with their date and the system will display them on that day.
+    .content
+      .container
+        .row.row-container
+          if locals.historyData
+            .col-12
+              h5 Edit Events
+            .col-12
+              form(action=`/history/${historyData.id}` method="POST")
+                .row
+                  .col-12
+                    .form-group
+                      label(for="text") Text
+                      textarea(class="form-control" rows="3" name="text" id="text" placeholder="Enter text")= historyData.text
+                .row
+                  .col-4
+                    .form-group
+                      label(for="month") Month
+                      input(class="form-control" type="text" name="month" id="month" placeholder="Enter month" value=historyData.month)
+                  .col-4
+                    .form-group
+                      label(for="day") Day
+                      input(class="form-control" type="text" name="day" id="day" placeholder="Enter day" value=historyData.day)
+                  .col-4
+                    .form-group
+                      label(for="month") Year
+                      input(class="form-control" type="text" name="year" id="year" placeholder="Enter year" value=historyData.year)
+                input(type="submit" value="Save" class="btn btn-danger")
+          else
+            .col-12
+              h5 Add Events
+            .col-12
+              form(action=`/history/` method="POST")
+                .row
+                  .col-12
+                    .form-group
+                      label(for="text") Text
+                      textarea(class="form-control" rows="3" name="text" id="text" placeholder="Enter text")
+                .row
+                  .col-4
+                    .form-group
+                      label(for="month") Month
+                      input(class="form-control" type="text" name="month" id="month" placeholder="Enter month" value="")
+                  .col-4
+                    .form-group
+                      label(for="day") Day
+                      input(class="form-control" type="text" name="day" id="day" placeholder="Enter day" value="")
+                  .col-4
+                    .form-group
+                      label(for="month") Year
+                      input(class="form-control" type="text" name="year" id="month" placeholder="Enter year" value="")
+                input(type="submit" value="Save" class="btn btn-danger")
+
+            <!--<form>
+              <div class="form-group">
+                <label for="exampleFormControlFile1">Add CSV</label>
+                <input type="file" class="form-control-file" id="exampleFormControlFile1">
+              </div>
+              input(type="submit" value="Upload" class="btn btn-danger")
+            </form>!-->
+           
+        if locals.historyList 
+          .row.row-container
+            .col-12
+              h3.text-center Stored Entries
+            .col-12
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Date</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  each history in historyList
+                    tr
+                      td #{history.text}
+                      td #{history.month}/#{history.day}/#{history.year}
+                      td
+                        a(class="btn btn-danger" href=`/history/${history.id}`) Edit
+                      td
+                        a(class="btn btn-danger" href=`/history/delete/${history.id}`) Delete
+                </tbody>
+              </table>

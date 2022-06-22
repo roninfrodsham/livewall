@@ -1,0 +1,182 @@
+extends layout
+
+block content
+  main(role="main")
+    section.jumbotron.text-center
+      .container
+        h1.jumbotron-heading= title
+        p.lead.text-muted Add visitors names and company logos to the VIP state.
+
+    .content
+      .container
+
+        if locals.vipGlobals
+          .row.row-container
+
+            .col-12
+              h5 Global settings
+            .col-12
+              form(action=`/vip/globals/${vipGlobals._id}` method="POST" enctype="multipart/form-data")
+                input(type='hidden' name='origTitleImage' value=`${vipGlobals.titleImage}`)
+                .form-row
+                  .col-6
+                    label(for="globalTitle") Title
+                    input(class="form-control"  type="text" name="globalTitle" value=vipGlobals.title)
+                  .col-3
+                    label(for="globalLoops") Loops
+                    input(class="form-control"  type="text" name="globalLoops" value=vipGlobals.loops)
+                  .col-3
+                    label(for="globalRefreshTime") Timer
+                    input(class="form-control"  type="text" name="globalRefreshTime" value=vipGlobals.refreshTime)
+                br
+                .form-row
+                  .col-12
+                    label(for="titleImage") Image Title
+                    input(class="form-control-file" type="file" name="titleImage" id="titleImage" accept="image/png, image/jpeg")
+                  if vipGlobals.titleImage != ""
+                    .col-12
+                      br
+                      img(class="img-thumbnail" src=`/uploads/vip/${vipGlobals.titleImage}` width="200")
+                      a(href=`/vip/globals/delete/${vipGlobals.titleImage}/${vipGlobals._id}` class="btn btn-danger ml-3") Delete Title Image
+                br
+                input(type="submit" value="Save" class="btn btn-danger btn-pad")                
+
+
+        .row.row-container
+
+          if locals.vipEdit
+
+            .col-12
+              h5 Edit VIP
+            .col-12
+              form(action=`/vip/${vipEdit._id}` method="POST" enctype="multipart/form-data")
+                input(type='hidden' name='origPhoto' value=`${vipEdit.photo}`)
+                input(type='hidden' name='origTitleImage' value=`${vipEdit.titleImage}`)
+                input(type='hidden' name='origsPhoto1' value=`${vipEdit.sPhoto1}`)
+                input(type='hidden' name='origsPhoto2' value=`${vipEdit.sPhoto2}`)
+                input(type='hidden' name='origsPhoto3' value=`${vipEdit.sPhoto3}`)
+                .form-row
+                  .col-12
+                    label(for="title") Text Title
+                    input(class="form-control"  type="text" name="title" value=vipEdit.title)
+                br
+                .form-row
+                  .col-3
+                    label(for="titleImage") Image Title
+                    input(class="form-control-file" type="file" name="titleImage" id="titleImage" accept="image/png, image/jpeg")
+                  if vipEdit.titleImage != ""
+                    .col-3
+                      img(class="img-thumbnail ml-5" src=`/uploads/vip/${vipEdit.titleImage}` width="200")
+                hr
+                .form-row
+                  .col-3
+                    label(for="photo") Logo
+                    input(class="form-control-file" type="file" name="photo" id="photo" accept="image/png, image/jpeg")
+                  .col-3
+                    img(class="img-thumbnail ml-5" src=`/uploads/vip/${vipEdit.photo}` width="200")
+                hr
+                br
+                .form-group
+                  h5 Supporting Media
+                .form-row
+                  .col-4
+                      label(for="sPhoto1") Photo 1
+                      input(class="form-control-file" type="file" name="sPhoto1" id="sPhoto1" accept="image/png, image/jpeg")
+                      if vipEdit.sPhoto1 != ""
+                        br
+                        img(class="img-thumbnail" src=`/uploads/vip/${vipEdit.sPhoto1}` width="200")
+                  .col-4
+                      label(for="sPhoto2") Photo 2
+                      input(class="form-control-file" type="file" name="sPhoto2" id="sPhoto2" accept="image/png, image/jpeg")
+                      if vipEdit.sPhoto2 != ""
+                        br
+                        img(class="img-thumbnail" src=`/uploads/vip/${vipEdit.sPhoto2}` width="200")
+                  .col-4
+                      label(for="sPhoto3") Photo 3
+                      input(class="form-control-file" type="file" name="sPhoto3" id="sPhoto3" accept="image/png, image/jpeg")
+                      if vipEdit.sPhoto3 != ""
+                        br
+                        img(class="img-thumbnail" src=`/uploads/vip/${vipEdit.sPhoto3}` width="200")
+                br
+                input(type="submit" value="Save" class="btn btn-danger")
+
+          else
+
+            .col-12
+              h5 Add VIP
+            .col-12
+              form(action=`/vip/` method="POST" enctype="multipart/form-data")
+                .form-row
+                  .col-12
+                    label(for="title") Text Title
+                    input(class="form-control"  type="text" name="title" value="")
+                br
+                .form-row
+                  .col-3
+                    label(for="titleImage") Image Title
+                    input(class="form-control-file" type="file" name="titleImage" id="titleImage" accept="image/png, image/jpeg")
+                hr
+                .form-row
+                  .col-3
+                    label(for="photo") Logo
+                    input(class="form-control-file" type="file" name="photo" id="photo" accept="image/png, image/jpeg")
+                hr
+                br
+                .form-group
+                  h5 Supporting Images
+                .form-row
+                  .col-4
+                      label(for="sPhoto1") Photo 1
+                      input(class="form-control-file" type="file" name="sPhoto1" id="sPhoto1" accept="image/png, image/jpeg")
+                  .col-4
+                      label(for="sPhoto2") Photo 2
+                      input(class="form-control-file" type="file" name="sPhoto2" id="sPhoto2" accept="image/png, image/jpeg")
+                  .col-4
+                      label(for="sPhoto3") Photo 3
+                      input(class="form-control-file" type="file" name="sPhoto3" id="sPhoto3" accept="image/png, image/jpeg")
+                hr
+                br
+                input(type="submit" value="Save" class="btn btn-danger")
+
+        .row.row-container
+            .col-12
+               h3.text-center VIP List            
+            .col-12
+              if locals.vipList
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th class="text-center" scope="col">Title</th>
+                      <th class="text-center" scope="col">Image Title</th>
+                      <th class="text-center" scope="col">Logo</th>
+                      <th class="text-center" scope="col">Image 1</th>
+                      <th class="text-center" scope="col">Image 2</th>
+                      <th class="text-center" scope="col">Image 3</th>
+                      <th class="text-center" scope="col"></th>
+                      <th class="text-center" scope="col"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    each vip in vipList
+                      tr
+                        td.grey.text-center #{vip.title}
+                        td.grey.text-center
+                          if vip.titleImage != ""
+                            img(class="img-thumbnail" src=`/uploads/vip/${vip.titleImage}` width="100")
+                        td.grey.text-center
+                          img(class="img-thumbnail" src=`/uploads/vip/${vip.photo}` width="100")
+                        td.grey.text-center
+                          if vip.sPhoto1 != ""
+                            img(class="img-thumbnail" src=`/uploads/vip/${vip.sPhoto1}` width="100")
+                        td.grey.text-center
+                          if vip.sPhoto2 != ""
+                            img(class="img-thumbnail" src=`/uploads/vip/${vip.sPhoto2}` width="100")
+                        td.grey.text-center
+                          if vip.sPhoto3 != ""
+                            img(class="img-thumbnail" src=`/uploads/vip/${vip.sPhoto3}` width="100")
+                        td.grey.text-center
+                          a(class="btn btn-danger" href=`/vip/${vip.id}`) Edit
+                        td.grey.text-center
+                          a(class="btn btn-danger" href=`/vip/delete/${vip.id}`) Delete
+                  </tbody>
+                </table>

@@ -1,0 +1,59 @@
+extends layout
+
+block content
+  main(role="main")
+    section.jumbotron.text-center
+      .container
+        h1.jumbotron-heading= title
+        p.lead.text-muted Add images with a title and description, the LiveWall with play through them in sequence in then Live Mode.
+
+    .content
+      .container
+        .row.row-container
+          if locals.imageEdit
+            .col-12
+              h5 Edit Image  
+            .col-12
+              form(action=`/images/${imageEdit._id}` method="POST" enctype="multipart/form-data")
+                .form-group
+                  label(for="title") Title
+                  input(class="form-control" type="text" name="title" id="twitter" placeholder="Enter title" value=imageEdit.title)  
+                .form-group
+                  label(for="text") Text
+                  textarea(class="form-control" rows="3" name="text" id="text" placeholder="Enter text")= imageEdit.text
+                img(class="img-thumbnail float-right" src=`/uploads/${imageEdit.photo}` width="200")
+                .form-group
+                  label(for="photo") Update Photo
+                  input(class="form-control-file" type="file" name="photo" id="photo" accept="image/png, image/jpeg")
+                input(type="submit" value="Save" class="btn btn-danger")
+          else
+            .col-12
+              h5 Add Image
+            .col-12
+              form(action=`/images/` method="POST" enctype="multipart/form-data")
+                .form-group
+                  label(for="title") Title
+                  input(class="form-control" type="text" name="title" id="twitter" placeholder="Enter title")  
+                .form-group
+                  label(for="text") Text
+                  textarea(class="form-control" rows="3" name="text" id="text" placeholder="Enter text")
+                .form-group
+                  label(for="photo") Update Photo
+                  input(class="form-control-file" type="file" name="photo" id="photo" accept="image/png, image/jpeg")
+                input(type="submit" value="Save" class="btn btn-danger")
+
+        .row.row-container.row-no-margin
+          .col-12
+               h3.text-center Stored Images
+        .row
+          .col-12
+            .row
+              if locals.imagesList
+                each image in imagesList
+                  .card
+                    img(class="card-img-top" src=`/uploads/${image.photo}`)
+                    .card-body
+                      p.card-title= image.title
+                    .card-footer
+                      a(href=`/images/${image.id}` class="btn btn-danger btn-pad") Edit
+                      a(href=`/images/delete/${image.id}` class="btn btn-danger") Delete

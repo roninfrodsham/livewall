@@ -1,0 +1,54 @@
+extends layout
+
+block content
+  main(role="main")
+    section.jumbotron.text-center
+      .container
+        h1.jumbotron-heading= title
+        p.lead.text-muted Add dow connect images
+
+    .content
+      .container
+        .row.row-container
+          if locals.itemEdit
+            .col-12
+              h5 Edit Dow Connect  
+            .col-12
+              form(action=`/dowconnect/${_id}` method="POST" enctype="multipart/form-data")
+                input(type='hidden' name='origPhoto' value=`${itemEdit.photo}`)
+                .form-row
+                  .col-12
+                    label(for="photo") Update Photo
+                    input(class="form-control-file" type="file" name="photo" id="photo" accept="image/png, image/jpeg")
+                  .col-12
+                    br
+                    img(class="img-thumbnail" src=`/uploads/dowconnect/${itemEdit.photo}` width="200")
+                    a(href=`/dowconnect/delete/${_id}` class="btn btn-danger ml-3") Delete
+                br
+                input(type="submit" value="Save" class="btn btn-danger btn-pad")
+                a(href=`/dowconnect` class="btn btn-danger btn-pad") Cancel
+          else
+            .col-12
+              h5 Add Dow Connect
+            .col-12
+              form(action=`/dowconnect/` method="POST" enctype="multipart/form-data")
+                .form-group
+                  label(for="photo") Update Photo
+                  input(class="form-control-file" type="file" name="photo" id="photo" accept="image/png, image/jpeg")
+                input(type="submit" value="Save" class="btn btn-danger")
+
+        .row.row-container.row-no-margin
+          .col-12
+               h3.text-center Stored
+        .row
+          .col-12
+            .row
+              if locals.itemList
+                each item in itemList
+                  .card
+                    img(class="card-img-top" src=`/uploads/dowconnect/${item.photo}`)
+                    .card-body
+                      p.card-title= item.title
+                    .card-footer
+                      a(href=`/dowconnect/${item.id}` class="btn btn-danger btn-pad") Edit
+                      a(href=`/dowconnect/delete/${item.id}` class="btn btn-danger") Delete

@@ -1,0 +1,26 @@
+extends layout
+
+block content
+  main(role="main")
+    section.jumbotron.text-center
+      .container
+        h1.jumbotron-heading= title
+        p.lead.text-muted This settings form allows control over the social media accounts and weather location displayed on the LiveWall.
+    .content
+      .container
+        .row.row-container
+          .col-12
+            form(action=`/globals/${globalSettings && globalSettings._id}` method="POST")
+              .form-group
+                label(for="twitter") Twitter
+                input(class="form-control" type="text" name="twitter" id="twitter" placeholder="Enter Twitter account" value=(globalSettings && globalSettings.twitter))
+              .form-group
+                label(for="facebook") Facebook
+                input(class="form-control" type="text" name="facebook" id="facebook" placeholder="Enter Facebook account" value=(globalSettings && globalSettings.facebook))
+              .form-group
+                label(for="instagram") Instagram
+                input(class="form-control" type="text" name="instagram" id="instagram" placeholder="Enter Instagram account" value=(globalSettings && globalSettings.instagram))
+              //.form-group
+                //label(for="weather") Weather
+                //input(class="form-control" type="text" name="weather" id="weather" placeholder="Enter Weather location" value=(globalSettings && globalSettings.weather))
+              input(type="submit" value="Save" class="btn btn-danger")

@@ -1,0 +1,59 @@
+extends layout
+
+block content
+  main(role="main")
+    section.jumbotron.text-center
+      .container
+        h1.jumbotron-heading= title
+        p.lead.text-muted Update the text and images for each Heritage state
+
+    .content
+      .container
+        .row.row-container
+          .col-12
+
+            if locals.heritageEdit
+
+              form(action=`/heritage/${id}/${_id}` method="POST" enctype="multipart/form-data")
+                input(type='hidden' name='originalphoto' value=`${heritageEdit.photo}`)
+                .mdl-textfield.mdl-js-textfield
+                  label(for="title") Title
+                  textarea(class="form-control mdl-textfield__input" rows="4" name="title")= heritageEdit.title
+                br
+                img(src=`/uploads/${heritageEdit.photo}` height="200")
+                br
+                .mdl-textfield.mdl-js-textfield
+                  label(for="photo") Update Photo
+                  input(class="form-control-file" type="file" name="photo" id="photo" accept="image/png, image/jpeg")
+                br
+                input(type="submit" value="Save" class="btn btn-danger")
+
+            else
+
+              form(action=`/heritage/${id}` method="POST" enctype="multipart/form-data")
+                .form-group
+                  label(for="title") Title
+                  textarea(class="form-control" rows="4" name="title" placeholder="Enter title")
+                .form-group
+                  label(for="photo") Photo
+                  input(class="form-control-file" type="file" name="photo" id="photo" accept="image/png, image/jpeg")
+                br
+                input(type="submit" value="Save" class="btn btn-danger")
+
+        
+        .row.row-container.row-no-margin
+          .col-12
+               h3.text-center Stored Entries
+
+        .row
+          .col-12
+            .row     
+              if locals.heritageList
+                each heritage in heritageList
+                  .card
+                    img(class="card-img-top" src=`/uploads/${heritage.photo}`)
+                    .card-body
+                      p.card-title= heritage.title
+                    .card-footer
+                      a(href=`/heritage/${id}/${heritage.id}` class="btn btn-danger btn-pad") Edit
+                      a(href=`/heritage/delete/${id}/${heritage.id}` class="btn btn-danger") Delete

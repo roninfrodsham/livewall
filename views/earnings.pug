@@ -1,0 +1,96 @@
+extends layout
+
+block content
+  main(role="main")
+    section.jumbotron.text-center
+      .container
+        h1.jumbotron-heading= title
+        p.lead.text-muted Add Dow earnings to the LiveWall.
+
+    .content
+      .container
+        .row.row-container
+          if locals.earningData
+            .col-12
+                h5 Update Dow Earnings
+            .col-12
+              form(action=`/earnings/${id}` method="POST")
+                .row
+                  .col-12
+                    .form-group
+                      label(for="title") Title
+                      input(class="form-control" type="text" name="title" id="title" placeholder="Enter title" value=earningData.title)
+                .row
+                  .col-12
+                    .form-group
+                      label(for="title") Results
+                      input(class="form-control" type="text" name="results" id="results" placeholder="Enter results" value=earningData.results)
+                .row
+                  .col-4
+                    .form-group
+                      label(for="month") Month
+                      input(class="form-control" type="text" name="month" id="month" placeholder="Enter month" value=earningData.month)
+                  .col-4
+                    .form-group
+                      label(for="day") Day
+                      input(class="form-control" type="text" name="day" id="day" placeholder="Enter day" value=earningData.day)
+                  .col-4
+                    .form-group
+                      label(for="month") Year
+                      input(class="form-control" type="text" name="year" id="year" placeholder="Enter year" value=earningData.year)
+                input(type="submit" value="Save" class="btn btn-danger")
+          else
+            .col-12
+              h5 Add Dow Earnings
+            .col-12
+              form(action=`/earnings/` method="POST")
+                .row
+                  .col-12
+                    .form-group
+                      label(for="title") Title
+                      input(class="form-control" type="text" name="title" id="title" placeholder="Enter title" value="")
+                .row
+                  .col-12
+                    .form-group
+                      label(for="title") Results
+                      input(class="form-control" type="text" name="results" id="results" placeholder="Enter results" value="")
+                .row
+                  .col-4
+                    .form-group
+                      label(for="month") Month
+                      input(class="form-control" type="text" name="month" id="month" placeholder="Enter month" value="")
+                  .col-4
+                    .form-group
+                      label(for="day") Day
+                      input(class="form-control" type="text" name="day" id="day" placeholder="Enter day" value="")
+                  .col-4
+                    .form-group
+                      label(for="month") Year
+                      input(class="form-control" type="text" name="year" id="year" placeholder="Enter year" value="")
+                input(type="submit" value="Save" class="btn btn-danger")
+
+        if locals.earningsList
+          .row.row-container
+            .col-12
+               h3.text-center Stored Entries            
+            .col-12
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Date</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  each earning in earningsList
+                    tr
+                      td #{earning.title}
+                      td #{earning.month}/#{earning.day}/#{earning.year}
+                      td
+                        a(class="btn btn-danger" href=`/earnings/${earning.id}`) Edit
+                      td
+                        a(class="btn btn-danger" href=`/earnings/delete/${earning.id}`) Delete
+                </tbody>
+              </table>
